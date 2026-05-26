@@ -39,38 +39,6 @@ class Solution:
         head.next = self.reverseKGroup(curr, k)
         return prev
 
-    def reverseKGroup_iterative(self, head: ListNode, k: int) -> ListNode:
-        """迭代法：K 个一组翻转链表"""
-        dummy = ListNode(0, head)
-        prev_group = dummy
-
-        while True:
-            # 检查剩余节点是否够 k 个
-            curr = prev_group.next
-            count = 0
-            while curr and count < k:
-                curr = curr.next
-                count += 1
-            if count < k:
-                break
-
-            # 翻转当前组的 k 个节点
-            group_start = prev_group.next
-            prev = None
-            curr = group_start
-            for _ in range(k):
-                nxt = curr.next
-                curr.next = prev
-                prev = curr
-                curr = nxt
-
-            # 连接前一组的尾和当前组的头
-            prev_group.next = prev
-            group_start.next = curr  # 连接当前组的尾和下一组的头
-            prev_group = group_start  # 移动到当前组的尾
-
-        return dummy.next
-
 
 # ========== 辅助函数 ==========
 
@@ -149,27 +117,6 @@ def test():
     print("       ✅ 通过\n")
 
     print("🎉 所有测试样例通过！")
-
-    # ===== 迭代法测试 =====
-    print("\n===== 迭代法测试 =====\n")
-
-    # 迭代法测试 1
-    head6 = list_to_linkedlist([1, 2, 3, 4, 5])
-    result6 = linkedlist_to_list(solution.reverseKGroup_iterative(head6, 2))
-    print(f"迭代测试1: 输入 [1,2,3,4,5], k=2")
-    print(f"          输出: {result6}")
-    assert result6 == [2, 1, 4, 3, 5], f"期望 [2,1,4,3,5], 得到 {result6}"
-    print("          ✅ 通过\n")
-
-    # 迭代法测试 2
-    head7 = list_to_linkedlist([1, 2, 3, 4, 5])
-    result7 = linkedlist_to_list(solution.reverseKGroup_iterative(head7, 3))
-    print(f"迭代测试2: 输入 [1,2,3,4,5], k=3")
-    print(f"          输出: {result7}")
-    assert result7 == [3, 2, 1, 4, 5], f"期望 [3,2,1,4,5], 得到 {result7}"
-    print("          ✅ 通过\n")
-
-    print("🎉 迭代法测试全部通过！")
 
 
 if __name__ == "__main__":
